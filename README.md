@@ -1,19 +1,4 @@
-# smart-exam-web
+每天晚上提交一次git
+# 2020/2/14
+任务：项目搭建
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
