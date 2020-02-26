@@ -1,0 +1,97 @@
+<template>
+  <el-form :model="people" :rules="rules" ref="people" label-width="50px" class="demo-ruleForm">
+    <el-form-item label="账号" prop="account">
+      <el-input v-model="people.account"></el-input>
+    </el-form-item>
+    <el-form-item label="密码" prop="password">
+      <el-input v-model="people.password"></el-input>
+    </el-form-item>
+    <el-form-item label="类型" prop="type">
+      <!--<el-select v-model="people.type" placeholder="请选择类型">-->
+        <!--<el-option label="学生" value="1"></el-option>-->
+        <!--<el-option label="老师" value="2"></el-option>-->
+        <!--<el-option label="管理员" value="3"></el-option>-->
+      <!--</el-select>-->
+      <el-select v-model="people.type">
+        <el-option v-for="item in options" :key="item.value" :value="item.value" :label="item.label"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item>
+      <el-button class="submit" type="primary" @click="onSubmit('people')">立即登录</el-button>
+    </el-form-item>
+  </el-form>
+</template>
+
+<script>
+  import {login} from "@/network/form";
+  export default {
+    name: "LoginView",
+    data() {
+      return {
+        options: [{
+          value: '1',
+          label: '学生'
+        }, {
+          value: '2',
+          label: '老师'
+        }, {
+          value: '3',
+          label: '管理员'
+        }],
+        
+        people: {
+          account: '',
+          password: '',
+          type: '1'
+        },
+        rules: {
+          account: [
+            {required: true, message: '请输入账号', trigger: 'blur'},
+            {min: 0, max: 10, message: '长度在 0 到 10 个字符', trigger: 'blur'}
+          ],
+          password: [
+            {required: true, message: '请输入密码', trigger: 'change'}
+          ]
+        }
+      };
+    },
+    methods: {
+      onSubmit(people) {
+        this.$refs[people].validate((valid) => {
+          if (valid) {
+            login(this.people).then(res => {
+              
+              if(res.data.status=='1') {
+                this.$notify({
+                  title: '成功',
+                  message: "登录成功；type:"+res.data.type,
+                  type: 'success'
+                });
+                // console.log('status:'+res.data.status);
+                // console.log('type:'+res.data.type);
+                // console.log(res.data.message);
+              }else{
+                this.$notify({
+                  title: '登录失败',
+                  message: '登录失败：'+res.data.message,
+                  type: 'warning'
+                });
+              }
+              
+            })
+          } else {
+            
+            return false;
+          }
+        });
+        
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  .submit {
+    width: 200px;
+  }
+</style>

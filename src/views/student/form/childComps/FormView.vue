@@ -1,0 +1,57 @@
+<template>
+  <el-card class="box-card">
+    <div class="header">
+      {{flag}}
+      <router-link to="/form/login" class="text item" :class="{ selected: flag==1 }" @click.native="clickme('1')">登录</router-link>
+      <router-link to="/form/register" class="text item" :class="{ selected: flag==2 }" @click.native="clickme('2')">注册</router-link>
+    </div>
+    <router-view/>
+  </el-card>
+</template>
+
+<script>
+  export default {
+    name: "FormView",
+    data: function() {
+      return {
+        flag: 1
+      };
+    },
+  methods: {
+    clickme(x) {
+      console.log(x);
+      this.flag=x
+    }
+  }
+  }
+</script>
+
+<style scoped>
+  .selected{
+    border-bottom: 2px solid red;
+  }
+  .header{
+    text-align: center;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+  }
+  .header a{
+    font-size: 20px;
+    width: 100px;
+    height: 60px;
+  }
+  .box-card {
+    float: right;
+    margin-top: 100px;
+    margin-right: 150px;
+    width: 350px;
+    line-height: 60px;
+  }
+  .text {
+    font-size: 14px;
+  }
+
+  .item {
+    padding: 0px 0;
+  }
+</style>
