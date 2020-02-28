@@ -1,26 +1,29 @@
 <template>
   <el-container>
     <el-header>
-      <FormView></FormView>
+      <HeaderView></HeaderView>
     </el-header>
-    <el-main>Main</el-main>
+    <el-main>
+      <MainView></MainView>
+    </el-main>
   </el-container>
 </template>
 
 <script>
-  import FormView from '@/views/student/index/childComps/header/Header'
-  
+  import HeaderView from '@/views/student/index/childComps/header/Header'
+  import MainView from '@/views/student/index/childComps/main/Main'
   export default {
     name: "Index",
     components: {
-      FormView
+      HeaderView,
+      MainView
     }
   }
 </script>
 
 <style scoped>
   .el-header {
-    background-color: #B3C0D1;
+    /*background-color: #B3C0D1;*/
     display: flex;
     align-items: center;
   }
@@ -28,7 +31,7 @@
   .el-main {
     background-color: #E9EEF3;
     color: #333;
-    text-align: center;
-    line-height: 160px;
+    width: 1000px;
+    margin: 0 auto;
   }
 </style>

@@ -2,7 +2,7 @@ import axios from './axios'
 
 
 export function login(people) {
-  return axios('login', {
+  return axios( {
     url: '/login',
     method: 'post',
     data:{

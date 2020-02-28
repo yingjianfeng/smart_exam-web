@@ -61,19 +61,22 @@
           if (valid) {
             login(this.people).then(res => {
               
-              if(res.data.status=='1') {
+              if(res.status=='1') {
                 this.$notify({
                   title: '成功',
                   message: "登录成功",
                   type: 'success'
                 });
+                this.$router.push({
+                  path: '/index/dynamic',
+                })
                 // console.log('status:'+res.data.status);
                 // console.log('type:'+res.data.type);
                 // console.log(res.data.message);
               }else{
                 this.$notify({
                   title: '登录失败',
-                  message: res.data.message,
+                  message: res.message,
                   type: 'warning'
                 });
               }
