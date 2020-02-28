@@ -1,7 +1,6 @@
 <template>
   <el-card class="box-card">
     <div class="header">
-      {{flag}}
       <router-link to="/form/login" class="text item" :class="{ selected: flag==1 }" @click.native="clickme('1')">登录</router-link>
       <router-link to="/form/register" class="text item" :class="{ selected: flag==2 }" @click.native="clickme('2')">注册</router-link>
     </div>

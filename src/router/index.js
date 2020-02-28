@@ -5,6 +5,8 @@ const Form = () => import('views/student/form/Form')
 const FormLogin = () => import('views/student/form/childComps/LoginView')
 const FormRegister = () => import('views/student/form/childComps/Register')
 
+const Index = () => import('views/student/index/Index')
+
 Vue.use(VueRouter)
 const routes = [
   {
@@ -20,6 +22,10 @@ const routes = [
         component: FormRegister,
       }
     ]
+  },
+  {
+    path: '/index',
+    component: Index,
   }
 ]
 

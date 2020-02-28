@@ -64,7 +64,7 @@
               if(res.data.status=='1') {
                 this.$notify({
                   title: '成功',
-                  message: "登录成功；type:"+res.data.type,
+                  message: "登录成功",
                   type: 'success'
                 });
                 // console.log('status:'+res.data.status);
@@ -73,7 +73,7 @@
               }else{
                 this.$notify({
                   title: '登录失败',
-                  message: '登录失败：'+res.data.message,
+                  message: res.data.message,
                   type: 'warning'
                 });
               }
