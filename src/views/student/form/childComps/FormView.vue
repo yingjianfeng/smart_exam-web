@@ -1,8 +1,8 @@
 <template>
   <el-card class="box-card">
     <div class="header">
-      <router-link to="/form/login" class="text item" :class="{ selected: flag==1 }" @click.native="clickme('1')">登录</router-link>
-      <router-link to="/form/register" class="text item" :class="{ selected: flag==2 }" @click.native="clickme('2')">注册</router-link>
+      <router-link  to="/form/login" class="text item" active-class="selected"  @click.native="clickme('1')">登录</router-link>
+      <router-link to="/form/register" class="text item" active-class="selected"  @click.native="clickme('2')">注册</router-link>
     </div>
     <router-view/>
   </el-card>
@@ -13,21 +13,17 @@
     name: "FormView",
     data: function() {
       return {
-        flag: 1
       };
     },
   methods: {
-    clickme(x) {
-      console.log(x);
-      this.flag=x
-    }
+  
   }
   }
 </script>
 
 <style scoped>
   .selected{
-    border-bottom: 2px solid red;
+    border-bottom: 2px solid #409EFF;
   }
   .header{
     text-align: center;

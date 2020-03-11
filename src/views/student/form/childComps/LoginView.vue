@@ -61,7 +61,8 @@
           if (valid) {
             login(this.people).then(res => {
               
-              if(res.status=='1') {
+              if(res.success) {
+                localStorage.setItem("Authorization","Bearer "+res.data)
                 this.$notify({
                   title: '成功',
                   message: "登录成功",
