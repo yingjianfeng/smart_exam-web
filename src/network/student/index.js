@@ -30,3 +30,37 @@ export function qryNotParentId() {
   })
 }
 
+/*取消点赞*/
+export function deleteLikeByDiscussion(id) {
+  return axios({
+    url: '/discussion/deleteLikeByDiscussion',
+    method: 'get',
+    params: {
+      discussion_id: id
+    }
+  })
+}
+
+/*添加点赞*/
+export function addLikeByDiscussion(id) {
+  return axios({
+    url: '/discussion/addLikeByDiscussion',
+    method: 'get',
+    params: {
+      discussion_id: id
+    }
+  })
+}
+
+
+/*查询动态下的评论*/
+
+export function qryByParentId(discussion_id) {
+  return axios({
+    url: '/discussion/qryByParentId',
+    method: 'get',
+    params: {
+      parent_id: discussion_id
+    }
+  })
+}

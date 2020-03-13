@@ -21,15 +21,16 @@
       </div>
     </el-card>
     <el-row class="operation">
-      <a class="flex-item " @click="do_like" :class="{active:like.isActive}"><i class="el-icon-star-on"></i> {{discussion.like}}</a>
+      <a class="flex-item " @click="do_like" :class="{active:discussion.liked}"><i class="el-icon-star-on"></i>
+        {{discussion.like}}</a>
       <a class="flex-item " @click="do_discuss" :class="{active:discuss.isActive}"><i class="el-icon-s-comment"></i>
         {{discussion.comment}}</a>
-      <a class="flex-item " @click="do_share" :class="{active:share.isActive}"><i class="el-icon-share"></i> {{discussion.share}}</a>
-      <a class="flex-item " ><i class="el-icon-more-outline"></i></a>
+      <a class="flex-item " @click="do_share" :class="{active:share.isActive}"><i class="el-icon-share"></i>
+        {{discussion.share}}</a>
+      <a class="flex-item "><i class="el-icon-more-outline"></i></a>
     </el-row>
-    <CommentView :isActive="discuss.isActive"></CommentView>
-    <CommentView :isActive="discuss.isActive"></CommentView>
-    <CommentView :isActive="discuss.isActive"></CommentView>
+    <CommentView v-for="item in comment" :isActive="discuss.isActive" :content="item"></CommentView>
+    
     <MyCommentView :isActive="discuss.isActive"></MyCommentView>
   </div>
 </template>
@@ -37,22 +38,25 @@
 <script>
   import CommentView from '@/views/student/index/childComps/main/dynamic/childComps/Comment'
   import MyCommentView from '@/views/student/index/childComps/main/dynamic/childComps/MyComment'
+  import {deleteLikeByDiscussion,addLikeByDiscussion,qryByParentId} from "@/network/student/index";
+  
   export default {
     name: "Item",
-    components:{
+    components: {
       CommentView,
       MyCommentView
     },
-    props:{
-      discussion:{
+    props: {
+      itemdiscussion: {
         type: Object,
-        default:()=>{
-         
-         }
+        default: () => {
+        
+        }
       }
     },
     data() {
       return {
+        discussion: this.itemdiscussion,
         like: {
           isActive: false,
           times: 1,
@@ -64,25 +68,45 @@
         share: {
           isActive: false,
           times: 1,
+        },
+        comment:{
+        
         }
       }
     },
     methods: {
       do_like() {
-        if(this.like.isActive){
-          this.like.times--;
-        }else{
-          this.like.times++;
+        
+        if (this.discussion.liked) {
+          if (this.discussion.like == 0) {
+            return
+          }
+          deleteLikeByDiscussion(this.discussion.id).then(res => {
+            console.log(res);
+          });
+          this.discussion.like--;
+        } else {
+          addLikeByDiscussion(this.discussion.id).then(res => {
+            console.log(res);
+          });
+          this.discussion.like++;
         }
-        this.like.isActive = !this.like.isActive;
+        this.discussion.liked = !this.discussion.liked;
+        console.log(this.discussion.liked);
       },
       do_discuss() {
+        qryByParentId(this.discussion.id).then(res => {
+          console.log(this.discussion.id);
+          
+          this.comment = res.data;
+          console.log(this.comment);
+        });
         this.discuss.isActive = !this.discuss.isActive;
       },
       do_share() {
-        if(this.share.isActive){
+        if (this.share.isActive) {
           this.share.times--;
-        }else{
+        } else {
           this.share.times++;
         }
         this.share.isActive = !this.share.isActive;
@@ -95,9 +119,11 @@
   .active {
     color: #ff5777;
   }
-  .border{
+  
+  .border {
     border: 1px solid #e0e0e0;
   }
+  
   .flex-item {
     text-align: center;
     line-height: 30px;
@@ -143,7 +169,8 @@
     vertical-align: middle;
     margin-left: 8px;
   }
-  .time{
+  
+  .time {
     display: inline-block;
     vertical-align: middle;
     margin-right: 8px;

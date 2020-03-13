@@ -3,7 +3,7 @@
     <div class="box_left">
       <PublishView></PublishView>
       <el-collapse-transition v-for="discussion in discussions">
-        <ItemView :discussion="discussion"></ItemView>
+        <ItemView :itemdiscussion="discussion"></ItemView>
       </el-collapse-transition>
     </div>
     <div class="box_right">
