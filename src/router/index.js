@@ -10,51 +10,72 @@ const IndexDynamic = () => import('views/student/index/childComps/main/dynamic/D
 const IndexTesk = () => import('views/student/index/childComps/main/tesk/Tesk')
 
 
+const QuestionsItems = () => import('views/student/questions/childComps/Items')
+
 const Discussion = () => import('views/student/discussion/Discussion')
 const Questions = () => import('views/student/questions/Questions')
 const Study = () => import('views/student/study/Study')
+
+
+
 
 Vue.use(VueRouter)
 const routes = [
   {
     path: '/form',
-    component: Form,
+    component: resolve=>(require(["views/student/form/Form"],resolve)),
     children: [
       {
         path: 'login',
-        component: FormLogin,
+        component: resolve=>(require(["views/student/form/childComps/LoginView"],resolve)),
       },
       {
         path: 'register',
-        component: FormRegister,
+        component: resolve=>(require(["views/student/form/childComps/Register"],resolve)),
       }
     ]
   },
   {
     path: '/index',
-    component: Index,
+    component: resolve=>(require(["views/student/index/Index"],resolve)),
     children: [
       {
         path: 'dynamic',
-        component: IndexDynamic,
+        component: resolve=>(require(["views/student/index/childComps/main/dynamic/Dynamic"],resolve)),
       },
       {
         path: 'tesk',
-        component: IndexTesk,
+        component: resolve=>(require(["views/student/index/childComps/main/tesk/Tesk"],resolve)),
       }
     ]
   },
-  {
+
+{
     path: '/questions',
-    component: Questions,
+    component: resolve=>(require(["views/student/questions/Questions"],resolve)),
+    children: [
+      {
+        path: 'items',
+        component:  resolve=>(require(["views/student/questions/childComps/Items"],resolve)),
+      },
+      {
+        path: 'test',
+        component: resolve=>(require(["views/student/questions/childComps/Test"],resolve))
+      }
+      
+    ]
   },
   {
     path: '/study',
-    component: Study,
+    component: resolve=>(require(["views/student/study/Study"],resolve))
   },
   {
     path: '/discussione',
-    component: Discussion,
+    component: resolve=>(require(["views/student/discussion/Discussion"],resolve))
+  },
+  {
+    path: '/information',
+    component: resolve=>(require(["views/student/information/Information"],resolve))
   }
 ]
 

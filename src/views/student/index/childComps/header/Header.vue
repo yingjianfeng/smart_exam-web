@@ -26,9 +26,19 @@
           <span class="addr">{{ item.address }}</span>
         </template>
       </el-autocomplete>
-      <el-avatar class="headerimg"
-                 src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+      
+      <el-dropdown @command="handleCommand">
+        <el-avatar class="headerimg"src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="information" >查看资料</el-dropdown-item>
+          <el-dropdown-item command="form/login" >退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <div></div>
+     
+      
     </div>
+    
   </div>
 </template>
 
@@ -79,13 +89,17 @@
         this.$router.push("/index/dynamic");
       },
       toquestions() {
-        this.$router.push("/questions");
+        this.$router.push("/questions/items");
       },
       tostudy() {
         this.$router.push("/study");
       },
       todiscussion() {
         this.$router.push("/discussione");
+      },
+      
+      handleCommand(command) {
+        this.$router.push("/"+command);
       }
     },
     mounted() {
@@ -112,7 +126,7 @@
   
   .header_right {
     width: 400px;
-    line-height: 60px;
+   
     display: flex;
     justify-content: space-between;
     align-items: center;

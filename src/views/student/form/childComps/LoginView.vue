@@ -63,11 +63,7 @@
               
               if(res.success) {
                 localStorage.setItem("Authorization","Bearer "+res.data)
-                this.$notify({
-                  title: '成功',
-                  message: "登录成功",
-                  type: 'success'
-                });
+                
                 this.$router.push({
                   path: '/index/dynamic',
                 })
@@ -75,11 +71,8 @@
                 // console.log('type:'+res.data.type);
                 // console.log(res.data.message);
               }else{
-                this.$notify({
-                  title: '登录失败',
-                  message: res.message,
-                  type: 'warning'
-                });
+  
+                this.$message.error('登录失败：'+res.message);
               }
               
             })
