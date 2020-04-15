@@ -1,49 +1,66 @@
 <template>
   <div id="Items">
-    <div v-for="item in grade">
-    <div class="items-header">
-      <h2>{{item.name}}
-        <span class="items-header-span">有{{item.questionClassify.length}}个</span>
-      </h2>
-    </div>
+    <el-divider content-position="center">随机组卷</el-divider>
     <div class="items-main">
-      <div @click="click(item.id,classify.id)"  v-for="classify in item.questionClassify">
-        <el-card :body-style="{ padding: '0px' }" class="item" shadow="always" >
+      <div @click="click(item.id,-1)" v-for="item in testGrade">
+        <el-card :body-style="{ padding: '0px' }" class="item" shadow="always">
           <img src="../../../../assets/img/math.png" class="image"/>
           <div class="item-main ">
-            <div class="item-main-info">数学{{classify.name}}</div>
+            <div class="item-main-info">{{item.name}}数学</div>
           </div>
         </el-card>
       </div>
     </div>
+    <el-divider content-position="center">专项训练</el-divider>
+    <div v-for="item in grade">
+      <div class="items-header">
+        <h2>{{item.name}}
+          <span class="items-header-span">有{{item.questionClassify.length}}个</span>
+        </h2>
+      </div>
+      <div class="items-main">
+        <div @click="click(item.id,classify.id)" v-for="classify in item.questionClassify">
+          <el-card :body-style="{ padding: '0px' }" class="item" shadow="always">
+            <img src="../../../../assets/img/math.png" class="image"/>
+            <div class="item-main ">
+              <div class="item-main-info">数学{{classify.name}}</div>
+            </div>
+          </el-card>
+        </div>
+      </div>
     </div>
-    
   </div>
 </template>
 
 <script>
-  import {qryGradeAndClassify} from "@/network/student/question";
+  import {qryGradeAndClassify, qryAllGrade} from "@/network/student/question";
   
   export default {
     name: "Items",
-    data(){
-      return{
-        grade:[]
+    data() {
+      return {
+        testGrade: [],/*考试的数据*/
+        grade: []/*单项测试的数据*/
       }
     },
-    methods:{
-      qryItems(){
+    methods: {
+      qryItems() {
         qryGradeAndClassify().then(res => {
           this.grade = res.data;
         });
       },
-      click(gradeId,classifyId) {
-        this.$confirm(gradeId+""+classifyId+'是否开始答题?', '提示', {
+      qryAllGrade() {
+        qryAllGrade().then(res => {
+          this.testGrade = res.data;
+        });
+      },
+      click(gradeId, classifyId) {
+        this.$confirm( gradeId+" "+classifyId+'是否开始答题?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'info'
         }).then(() => {
-          this.$router.push({path: '/questions/test', query: {gradeId: gradeId,classifyId:classifyId}})
+          this.$router.push({path: '/questions/test', query: {gradeId: gradeId, classifyId: classifyId}})
           // this.$router.push("/questions/test");
         }).catch(() => {
           this.$message({
@@ -54,7 +71,8 @@
       }
     },
     created() {
-      this.qryItems()
+      this.qryItems(),
+        this.qryAllGrade()
     }
   }
 </script>
@@ -116,5 +134,9 @@
   
   .clearfix:after {
     clear: both
+  }
+  
+  .test {
+    margin-bottom: 80px;
   }
 </style>

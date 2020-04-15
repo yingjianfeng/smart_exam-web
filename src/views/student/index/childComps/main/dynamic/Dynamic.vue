@@ -9,10 +9,16 @@
     <div class="box_right">
       <el-card class="box_right_card">
         <div slot="header" class="clearfix">
-          <span>排行榜</span>
+          <span>昨日答题排行榜</span>
         </div>
-        <div v-for="o in 4" :key="o" class="text item">
-          {{'列表内容 ' + o }}
+        <div v-for="(item,index) in group"  class="text item">
+          <!--{{index+1}}-{{item.p_name }}{{item.times }}-->
+          <!--<el-tag type="success">标签二</el-tag>-->
+          <li class="li">
+            <span>{{index+1}}</span>
+            <span>{{item.p_name }}</span>
+            <span>{{item.times }}次</span>
+          </li>
         </div>
       </el-card>
     </div>
@@ -23,13 +29,14 @@
 <script>
   import PublishView from '@/views/student/index/childComps/main/dynamic/childComps/Publish'
   import ItemView from '@/views/student/index/childComps/main/dynamic/childComps/Item'
-  import {qryNotParentId} from "@/network/student/index";
+  import {qryNotParentId,groupByPIdQry} from "@/network/student/index";
   
   export default {
     name: "Dynamic",
     data() {
       return {
-        discussions: {}
+        discussions: {},
+        group:[]
       }
     },
     components: {
@@ -42,10 +49,19 @@
     methods: {
       qryall() {
         qryNotParentId().then(res => {
-          console.log(res);
+          // console.log(res);
           this.discussions = res.data;
         })
+      },
+      groupByPIdQry(){
+        groupByPIdQry().then(res => {
+          console.log(res);
+          this.group = res.data;
+        })
       }
+    },
+    created() {
+      this.groupByPIdQry()
     }
   }
 </script>
@@ -71,5 +87,11 @@
   .box_right_card {
     width: 250px;
     margin-top: 20px;
+  }
+  .li{
+    list-style-type:none;
+    line-height: 30px;
+    display: flex;
+    justify-content: space-between;
   }
 </style>

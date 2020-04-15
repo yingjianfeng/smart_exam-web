@@ -28,21 +28,24 @@
       </el-autocomplete>
       
       <el-dropdown @command="handleCommand">
-        <el-avatar class="headerimg"src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+        <el-avatar class="headerimg"
+                   :src="info.img"></el-avatar>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="information" >查看资料</el-dropdown-item>
-          <el-dropdown-item command="form/login" >退出登录</el-dropdown-item>
+          <el-dropdown-item command="information">查看资料</el-dropdown-item>
+          <el-dropdown-item command="form/login">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
       <div></div>
-     
-      
-    </div>
     
+    
+    </div>
+  
   </div>
 </template>
 
 <script>
+  import {qryInfo} from "@/network/student/info";
+  
   export default {
     name: "Header",
     props: {
@@ -56,7 +59,10 @@
       return {
         // activeIndex: '1',
         restaurants: [],
-        state: ''
+        state: '',
+        info:{
+    
+        }
       };
     },
     methods: {
@@ -99,11 +105,20 @@
       },
       
       handleCommand(command) {
-        this.$router.push("/"+command);
+        this.$router.push("/" + command);
+      },
+      qryInfo() {
+        qryInfo().then(res => {
+          console.log(res);
+          this.info = res.data;
+        });
       }
     },
     mounted() {
       this.restaurants = this.loadAll();
+    },
+    created() {
+      this.qryInfo()
     }
   }
 </script>
@@ -126,7 +141,7 @@
   
   .header_right {
     width: 400px;
-   
+    
     display: flex;
     justify-content: space-between;
     align-items: center;

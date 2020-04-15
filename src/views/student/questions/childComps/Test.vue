@@ -1,20 +1,22 @@
 <template>
   <div>
+    {{maxtime}}
     <!--{{question}}-->
     <div class="clock">
-      倒计时：{{m}}分:{{s}}秒
+      <span v-if="classifyId==-1">{{m}}分:{{s}}秒</span>
+      <span v-else> 开始答题</span>
     </div>
-    
     <div class="question" v-for="(item,i) in question">
-      <div class="header"><span class="spanText">* </span>{{i+1}}.&nbsp;&nbsp;{{item.content}} (  )</div>
+      <div class="header"><span class="spanText">* </span>{{i+1}}.&nbsp;&nbsp;{{item.content}} ___ <i
+              class="el-icon-star-on " :class="{collect:item.collect>0}" @click="collect(item)"></i></div>
+      
       <div class="main">
         <el-radio-group v-model="item.answer">
           <el-radio :label='item.option1'>A: {{item.option1}}</el-radio>
           <el-radio :label='item.option2'>B: {{item.option2}}</el-radio>
-          <el-radio :label='item.option3'>C: {{item.option3}}</el-radio>
-          <el-radio :label='item.option4'>D: {{item.option4}}</el-radio>
+          <el-radio :label='item.option3' v-if="item.type!=2">C: {{item.option3}}</el-radio>
+          <el-radio :label='item.option4' v-if="item.type!=2">D: {{item.option4}}</el-radio>
         </el-radio-group>
-       
       </div>
       <el-divider></el-divider>
     </div>
@@ -31,11 +33,12 @@
       </el-tooltip>
     </div>
     <!--{{question_result}}-->
+    <!--{{question}}-->
   </div>
 </template>
 
 <script>
-  import {qryByclassifyIdAndGradeId, submitAnswer} from "@/network/student/question";
+  import {qryByclassifyIdAndGradeId, submitAnswer, collect, deleteCollect} from "@/network/student/question";
   
   export default {
     name: "Test",
@@ -46,14 +49,18 @@
         form: {
           resource: '',
         },
-        m: 1,
-        s: 0,
+        m: null,
+        s: null,
+        maxtime:5*60,
         btn: {
           disabled: false,
           text: "提 交"
         },
         show: false,
-        btn_result:"查看答题卡"
+        btn_result: "查看答题卡",
+        classifyId: this.$route.query.classifyId,
+        gradeId: this.$route.query.gradeId,
+        timer:null
       }
     },
     mounted() {
@@ -64,26 +71,44 @@
       //倒计时
       countdown() {
         var that = this;
-        var timer;
-        var maxtime = 10; //
         function down() {
-          if (maxtime >= 0) {
-            that.m = Math.floor(maxtime / 60);
-            that.s = Math.floor(maxtime % 60);
+          if (that.maxtime >= 0) {
+            that.m = Math.floor(that.maxtime / 60);
+            that.s = Math.floor(that.maxtime % 60);
             // if (maxtime == 5 * 60) {
             //   alert("距离结束仅剩5分钟");
             // }
-            --maxtime;
+            --that.maxtime;
             // console.log(this.s);
           } else {
-            clearInterval(timer);
+            submitAnswer(that.question,0).then(res => {
+              console.log(res.data);
+              that.question_result = res.data.map;
+              that.$confirm('恭喜你答对了：' + res.data.number + "题", '提示', {
+                confirmButtonText: '确定',
+                // cancelButtonText: '取消',
+                showCancelButton: false,
+                type: 'success',
+                center: true
+              }).then(() => {
+              
+              }).catch(() => {
+              
+              });
+            });
+  
+            that.btn.text = "已提交";
+            that.btn.disabled = true;
             
-            that.$options.methods.btnSubmit();
+            
+            clearInterval(this.timer);
           }
           
         }
         
-        timer = setInterval(down, 1000);
+        if (this.classifyId == -1) {
+          this.timer = setInterval(down, 1000);
+        }
       },
       qryByclassifyIdAndGradeId() {
         var classifyId = this.$route.query.classifyId
@@ -93,13 +118,13 @@
         });
       },
       btnSubmit() {
-        alert("时间到，结束!");
         this.$confirm('确认答题完毕，提交?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          submitAnswer(this.question).then(res => {
+          var time = 5*60-this.maxtime;
+          submitAnswer(this.question,time).then(res => {
             console.log(res.data);
             this.question_result = res.data.map;
             this.$confirm('恭喜你答对了：' + res.data.number + "题", '提示', {
@@ -109,15 +134,9 @@
               type: 'success',
               center: true
             }).then(() => {
-              this.$message({
-                type: 'success',
-                message: '删除成功!'
-              });
+            
             }).catch(() => {
-              this.$message({
-                type: 'info',
-                message: '已取消删除'
-              });
+            
             });
           });
           
@@ -131,6 +150,8 @@
             message: '已取消提交'
           });
         });
+  
+        clearInterval(this.timer)
       },
       tip(id) {
         for (let key  in this.question_result) {
@@ -150,19 +171,35 @@
         }
       },
       selResult() {
-        if(this.show){
-          this.show=false;
-          this.btn_result="查看答题卡"
-        }else{
-          this.show=true;
-          this.btn_result="取消查看"
+        if (this.show) {
+          this.show = false;
+          this.btn_result = "查看答题卡"
+        } else {
+          this.show = true;
+          this.btn_result = "取消查看"
         }
         
-      }
+      },
+      collect(item) {
+        if (item.collect < 1) {
+          item.collect = 1;
+          collect(item.id).then(res => {
+            this.$message.success('收藏成功');
+            console.log(res);
+          })
+        } else {
+          item.collect = 0;
+          deleteCollect(item.id).then(res => {
+            this.$message.warning('取消收藏成功');
+            console.log(res);
+          })
+        }
+        
+      },
     },
     //当离开页面时，清除倒计时
     beforeDestroy() {
-      clearInterval(this._interval)
+      clearInterval(this.timer)
     },
   }
 </script>
@@ -224,16 +261,23 @@
   .answer .el-button {
     padding: 0px;
   }
-  .spanText{
+  
+  .spanText {
     color: red;
   }
-  .el-radio-group{
+  
+  .el-radio-group {
     flex: 1;
-    display:flex;
+    display: flex;
     flex-flow: column;
     /*margin-top: 10px;*/
   }
-  .el-radio{
+  
+  .el-radio {
     margin-top: 15px;
+  }
+  
+  .collect {
+    color: red;
   }
 </style>

@@ -17,65 +17,93 @@ const Questions = () => import('views/student/questions/Questions')
 const Study = () => import('views/student/study/Study')
 
 
-
-
 Vue.use(VueRouter)
 const routes = [
   {
     path: '/form',
-    component: resolve=>(require(["views/student/form/Form"],resolve)),
+    component: resolve => (require(["views/student/form/Form"], resolve)),
     children: [
       {
         path: 'login',
-        component: resolve=>(require(["views/student/form/childComps/LoginView"],resolve)),
+        component: resolve => (require(["views/student/form/childComps/LoginView"], resolve)),
       },
       {
         path: 'register',
-        component: resolve=>(require(["views/student/form/childComps/Register"],resolve)),
+        component: resolve => (require(["views/student/form/childComps/Register"], resolve)),
       }
     ]
   },
   {
     path: '/index',
-    component: resolve=>(require(["views/student/index/Index"],resolve)),
+    component: resolve => (require(["views/student/index/Index"], resolve)),
     children: [
       {
         path: 'dynamic',
-        component: resolve=>(require(["views/student/index/childComps/main/dynamic/Dynamic"],resolve)),
+        component: resolve => (require(["views/student/index/childComps/main/dynamic/Dynamic"], resolve)),
       },
       {
         path: 'tesk',
-        component: resolve=>(require(["views/student/index/childComps/main/tesk/Tesk"],resolve)),
+        component: resolve => (require(["views/student/index/childComps/main/tesk/Tesk"], resolve)),
+      },
+      {
+        path: 'history',
+        component: resolve => (require(["views/student/index/childComps/main/history/History"], resolve)),
       }
     ]
   },
-
-{
+  
+  {
     path: '/questions',
-    component: resolve=>(require(["views/student/questions/Questions"],resolve)),
+    component: resolve => (require(["views/student/questions/Questions"], resolve)),
     children: [
       {
         path: 'items',
-        component:  resolve=>(require(["views/student/questions/childComps/Items"],resolve)),
+        component: resolve => (require(["views/student/questions/childComps/Items"], resolve)),
       },
       {
         path: 'test',
-        component: resolve=>(require(["views/student/questions/childComps/Test"],resolve))
+        component: resolve => (require(["views/student/questions/childComps/Test"], resolve))
       }
-      
+    
     ]
   },
   {
     path: '/study',
-    component: resolve=>(require(["views/student/study/Study"],resolve))
+    component: resolve => (require(["views/student/study/Study"], resolve))
   },
   {
     path: '/discussione',
-    component: resolve=>(require(["views/student/discussion/Discussion"],resolve))
+    component: resolve => (require(["views/student/discussion/Discussion"], resolve))
   },
   {
     path: '/information',
-    component: resolve=>(require(["views/student/information/Information"],resolve))
+    component: resolve => (require(["views/student/information/Information"], resolve))
+  },
+  {
+    path: '/teacher/index',
+    component: resolve => (require(["views/teacher/index/Index"], resolve)),
+    children: [
+      {
+        path: 'data',
+        component: resolve => (require(["views/teacher/index/childComps/data/Data"], resolve)),
+      },
+      {
+        path: 'questionall',
+        component: resolve => (require(["views/teacher/index/childComps/question/All"], resolve)),
+      },
+      {
+        path: 'questioninsert',
+        component: resolve => (require(["views/teacher/index/childComps/question/Insert"], resolve)),
+      },
+      {
+        path: 'student',
+        component: resolve => (require(["views/teacher/index/childComps/student/Student"], resolve)),
+      },
+      {
+        path: 'questionDetail',
+        component: resolve => (require(["views/teacher/index/childComps/student/QuestionDetail"], resolve)),
+      }
+    ]
   }
 ]
 

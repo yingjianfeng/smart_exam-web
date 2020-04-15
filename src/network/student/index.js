@@ -64,3 +64,43 @@ export function qryByParentId(discussion_id) {
     }
   })
 }
+
+
+export function groupByPIdQry() {
+  return axios({
+    url: '/discussion/groupByPIdQry',
+    method: 'get',
+  })
+}
+
+
+/*查动态*/
+export function qryQGroupByPid() {
+  return axios({
+    url: '/question/qryQGroupByPid',
+    method: 'post',
+  })
+}
+
+/*查动态*/
+export function qryByGid(gid) {
+  return axios({
+    url: '/question/qryByGid',
+    method: 'post',
+    data: {
+      gid: gid,
+    }
+  })
+}
+
+/*查动态*/
+export function updateQGroupRemarkById(id, remark) {
+  return axios({
+    url: '/question/updateQGroupRemarkById',
+    method: 'post',
+    data: {
+      id: id,
+      remark: remark
+    }
+  })
+}

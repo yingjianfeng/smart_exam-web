@@ -38,6 +38,7 @@
             <el-button
                     size="mini"
                     @click="handleEdit(scope.$index)">下载</el-button>
+            
           </template>
         </el-table-column>
       </el-table>
