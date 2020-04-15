@@ -12,8 +12,8 @@
         <!--<el-option label="老师" value="2"></el-option>-->
         <!--<el-option label="管理员" value="3"></el-option>-->
       <!--</el-select>-->
-      <el-select v-model="people.type">
-        <el-option v-for="item in options" :key="item.value" :value="item.value" :label="item.label"></el-option>
+      <el-select v-model="people.role_id">
+        <el-option v-for="item in options" :key="item.role_id" :value="item.role_id" :label="item.label"></el-option>
       </el-select>
     </el-form-item>
     <el-form-item>
@@ -29,20 +29,20 @@
     data() {
       return {
         options: [{
-          value: '1',
+          role_id: 1,
           label: '学生'
         }, {
-          value: '2',
+          role_id: 2,
           label: '老师'
         }, {
-          value: '3',
+          role_id: 3,
           label: '管理员'
         }],
         
         people: {
           account: '',
           password: '',
-          type: '1'
+          role_id: 1
         },
         rules: {
           account: [
@@ -60,18 +60,23 @@
         this.$refs[people].validate((valid) => {
           if (valid) {
             login(this.people).then(res => {
-              
+              console.log(res);
               if(res.success) {
-                localStorage.setItem("Authorization","Bearer "+res.data)
+                localStorage.setItem("Authorization","Bearer "+res.data);
+                if(this.people.role_id==1){
+                  this.$router.push({
+                    path: '/index/dynamic',
+                  })
+                }else if(this.people.role_id==2){
+                  this.$router.push({
+                    path: '/teacher/index',
+                  })
+                }
                 
-                this.$router.push({
-                  path: '/index/dynamic',
-                })
                 // console.log('status:'+res.data.status);
                 // console.log('type:'+res.data.type);
                 // console.log(res.data.message);
               }else{
-  
                 this.$message.error('登录失败：'+res.message);
               }
               

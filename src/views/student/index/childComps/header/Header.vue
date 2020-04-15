@@ -105,6 +105,9 @@
       },
       
       handleCommand(command) {
+        if(command=='form/login'){
+          localStorage.removeItem("Authorization");
+        }
         this.$router.push("/" + command);
       },
       qryInfo() {

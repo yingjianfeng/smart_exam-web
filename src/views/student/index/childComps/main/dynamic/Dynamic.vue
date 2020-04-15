@@ -3,7 +3,7 @@
     <div class="box_left">
       <PublishView></PublishView>
       <el-collapse-transition v-for="discussion in discussions">
-        <ItemView :itemdiscussion="discussion"></ItemView>
+        <ItemView :itemdiscussion="discussion" :people="people" ></ItemView>
       </el-collapse-transition>
     </div>
     <div class="box_right">
@@ -36,6 +36,8 @@
     data() {
       return {
         discussions: {},
+        people:{},
+        img:"",
         group:[]
       }
     },
@@ -49,8 +51,11 @@
     methods: {
       qryall() {
         qryNotParentId().then(res => {
-          // console.log(res);
-          this.discussions = res.data;
+          console.log("*****");
+          console.log(res);
+          console.log("*****");
+          this.discussions = res.data.discussions;
+          this.people = res.data.people;
         })
       },
       groupByPIdQry(){

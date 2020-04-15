@@ -2,7 +2,7 @@
   <div class="box-card-item " v-show="isActive">
     <div class="box">
       <div class="left">
-        <el-avatar :src="content.imgs"></el-avatar>
+        <el-avatar :src="content.people_img"></el-avatar>
       </div>
       <div class="right">
         <p>
@@ -11,7 +11,7 @@
         </p>
         <p class="date">
           <span>发表于 {{content.create_time}}</span>
-          <a href="javascript:void(0);">点赞(3)</a>
+          <a href="javascript:void(0);">点赞(0)</a>
         </p>
       </div>
     </div>

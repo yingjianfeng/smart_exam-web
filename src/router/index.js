@@ -111,5 +111,15 @@ const router = new VueRouter({
   routes,
   mode: 'history'
 })
+router.beforeEach((to,from,next)=>{
+  if(to.path=='/form/login'||to.path=='/form/register'){
+    next();
+  }else if(localStorage.getItem("Authorization")!=null){
+    next();
+  }else{
+    next({path:'/form/login'});
+  }
+  
+})
 
 export default router

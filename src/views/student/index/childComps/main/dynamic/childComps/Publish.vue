@@ -33,7 +33,7 @@
 
 <script>
   import {insertDiscussion,deleteImg} from "@/network/student/index";
-  
+  import {qryNotParentId} from "@/network/student/index";
   var token = localStorage.getItem('Authorization') // 要保证取到
   export default {
     name: "Publish",
@@ -56,6 +56,7 @@
       submit() {
         insertDiscussion(this.discussion);
         console.log("success");
+        this.$router.go(0);
       },
       handleRemove(file, fileList) {
         deleteImg(this.discussion.imgs);

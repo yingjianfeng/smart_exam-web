@@ -37,7 +37,7 @@
   }
   .box-card {
     float: right;
-    margin-top: 100px;
+    margin-top: 60px;
     margin-right: 150px;
     width: 350px;
     line-height: 60px;

@@ -1,5 +1,8 @@
 <template>
   <el-form :model="people" :rules="rules" ref="people" label-width="50px" class="demo-ruleForm">
+    <el-form-item label="姓名" prop="name">
+      <el-input v-model="people.name"></el-input>
+    </el-form-item>
     <el-form-item label="账号" prop="account">
       <el-input v-model="people.account"></el-input>
     </el-form-item>
@@ -7,8 +10,8 @@
       <el-input v-model="people.password"></el-input>
     </el-form-item>
     <el-form-item label="类型" prop="type">
-      <el-select v-model="people.type" placeholder="请选择">
-        <el-option v-for="item in options" :key="item.value" :value="item.value" :label="item.label"></el-option>
+      <el-select v-model="people.role_id" placeholder="请选择">
+        <el-option v-for="item in options" :key="item.role_id" :value="item.role_id" :label="item.label"></el-option>
       </el-select>
     </el-form-item>
     
@@ -41,15 +44,15 @@
         people: {
           account: '',
           password: '',
-          type: '1',
+          role_id: 1,
           grade: '',
           school: ''
         },
         options: [{
-          value: '1',
+          role_id: 1,
           label: '学生'
         }, {
-          value: '2',
+          role_id: 2,
           label: '老师'
         }],
         grade: [],
@@ -59,10 +62,13 @@
             {required: true, message: '请输入账号', trigger: 'blur'},
             {min: 0, max: 10, message: '长度在 0 到 10 个字符', trigger: 'blur'}
           ],
+          name: [
+            {required: true, message: '请输入姓名', trigger: 'change'}
+          ],
           password: [
             {required: true, message: '请输入密码', trigger: 'change'}
           ],
-          type: [
+          role_id: [
             {required: true, message: '请选择类型', trigger: 'change'}
           ],
           grade: [
@@ -80,12 +86,12 @@
     methods: {
       qryAllGradeAndSchool() {
         qryAllGrade().then(res => {
-          console.log(res);
-          this.grade = res.grade;
+          console.log(res.data);
+          this.grade = res.data;
         })
         qryAllSchool().then(res => {
-          console.log(res);
-          this.school = res.school;
+          console.log(res.data);
+          this.school = res.data;
         })
       },
       onSubmit(people) {
@@ -94,7 +100,7 @@
             console.log(this.people);
             register(this.people).then(res => {
               
-              if (res.data.status == '1') {
+              if (res.success) {
                 this.$notify({
                   title: '成功',
                   message: "可以前去登录" ,
@@ -106,7 +112,7 @@
               } else {
                 this.$notify({
                   title: '注册失败',
-                  message:  res.data.message,
+                  message:  res.data,
                   type: 'warning'
                 });
               }

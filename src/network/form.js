@@ -2,13 +2,13 @@ import axios from './axios'
 
 
 export function login(people) {
-  return axios( {
+  return axios({
     url: '/login',
     method: 'post',
-    data:{
+    data: {
       account: people.account,
       password: people.password,
-      type: people.type
+      role_id: people.role_id
     }
   })
 }
@@ -17,14 +17,15 @@ export function register(people) {
   return axios({
     url: '/register',
     method: 'post',
-    data:{
+    data: {
+      name: people.name,
       account: people.account,
       password: people.password,
-      type: people.type,
+      role_id: people.role_id,
       grade_id: people.grade,
       school_id: people.school,
     }
-})
+  })
 }
 
 export function qryAllGrade() {
@@ -38,4 +39,7 @@ export function qryAllSchool() {
     url: '/qryAllSchool',
   })
 }
+
+
+
 

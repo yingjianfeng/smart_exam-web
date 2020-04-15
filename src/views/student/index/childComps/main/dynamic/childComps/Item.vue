@@ -4,7 +4,7 @@
       <div class="box-card-item">
         <div class="box">
           <div class="left">
-            <el-avatar :src="discussion.imgs"></el-avatar>
+            <el-avatar :src="discussion.people_img"></el-avatar>
           </div>
           <div class="right">
             <p>
@@ -15,6 +15,9 @@
             <div class="content">
               <!--{{discussion}}-->
               {{discussion.content}}
+            </div>
+            <div class="imgdiv" v-show="discussion.imgs!=null||discussion.imgs!=''">
+              <img :src="discussion.imgs" alt="">
             </div>
           </div>
         </div>
@@ -31,7 +34,7 @@
     </el-row>
     <CommentView v-for="item in comment" :isActive="discuss.isActive" :content="item"></CommentView>
     
-    <MyCommentView :isActive="discuss.isActive"></MyCommentView>
+    <MyCommentView :itemdiscussion="itemdiscussion" :people_img="people.img" :isActive="discuss.isActive"></MyCommentView>
   </div>
 </template>
 
@@ -39,7 +42,7 @@
   import CommentView from '@/views/student/index/childComps/main/dynamic/childComps/Comment'
   import MyCommentView from '@/views/student/index/childComps/main/dynamic/childComps/MyComment'
   import {deleteLikeByDiscussion,addLikeByDiscussion,qryByParentId} from "@/network/student/index";
-  
+  import {qryNotParentId,groupByPIdQry} from "@/network/student/index";
   export default {
     name: "Item",
     components: {
@@ -52,7 +55,13 @@
         default: () => {
         
         }
-      }
+      },
+      people: {
+        type: Object,
+        default: () => {
+        
+        }
+      },
     },
     data() {
       return {
@@ -208,5 +217,12 @@
   
   .el-button + .el-button {
     margin-left: 0px;
+  }
+  .imgdiv{
+    margin-top: 10px;
+  }
+  .imgdiv img{
+    width: 100px;
+    height: 100px;
   }
 </style>

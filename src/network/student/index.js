@@ -104,3 +104,25 @@ export function updateQGroupRemarkById(id, remark) {
     }
   })
 }
+
+
+
+export function reply(discussion) {
+  return axios({
+    url: '/discussion/reply',
+    method: 'post',
+    data: {
+      parent_id:discussion.parent_id,
+      content:discussion.content
+    }
+  })
+}
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,10 @@
 <template>
   <el-container>
-    <el-header>Header</el-header>
+    <el-header>
+      <div class="headerdiv">
+        智能组卷与答题计分系统
+      </div>
+    </el-header>
     <el-container>
       <el-aside width="200px">
         
@@ -81,7 +85,7 @@
   .el-header {
     background-color: #B3C0D1;
     color: #333;
-    text-align: center;
+    /*text-align: center;*/
     line-height: 60px;
   }
   
@@ -96,4 +100,12 @@
     color: #333;
     height: 780px;
   }
+  .headerdiv{
+    /*background: #04bdb9;*/
+    width: 250px;
+    height: 50px;
+    margin-left: 100px;
+    font-size: 20px;
+  }
+  
 </style>
