@@ -59,7 +59,7 @@
       <el-upload
               class="upload-demo box"
               drag
-              action="http://localhost/data/fileUpload"
+              action="http://www.0612yjf.cn:8888/data/fileUpload"
               multiple
               :file-list="fileList"
               :headers="myHeaders"
@@ -77,7 +77,7 @@
   import {qryAll} from "@/network/student/data";
   import {deleteFile,updateDesById} from "@/network/teacher/data";
   
-  var token = localStorage.getItem('Authorization') // 要保证取到
+  var token = localStorage.getItem('Authorization'); // 要保证取到
   export default {
     name: "Data",
     data() {

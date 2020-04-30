@@ -1,24 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const Form = () => import('views/student/form/Form')
-const FormLogin = () => import('views/student/form/childComps/LoginView')
-const FormRegister = () => import('views/student/form/childComps/Register')
+const Form = () => import('views/student/form/Form');
+const FormLogin = () => import('views/student/form/childComps/LoginView');
+const FormRegister = () => import('views/student/form/childComps/Register');
 
-const Index = () => import('views/student/index/Index')
-const IndexDynamic = () => import('views/student/index/childComps/main/dynamic/Dynamic')
-const IndexTesk = () => import('views/student/index/childComps/main/tesk/Tesk')
-
-
-const QuestionsItems = () => import('views/student/questions/childComps/Items')
-
-const Discussion = () => import('views/student/discussion/Discussion')
-const Questions = () => import('views/student/questions/Questions')
-const Study = () => import('views/student/study/Study')
+const Index = () => import('views/student/index/Index');
+const IndexDynamic = () => import('views/student/index/childComps/main/dynamic/Dynamic');
+const IndexTesk = () => import('views/student/index/childComps/main/tesk/Tesk');
 
 
-Vue.use(VueRouter)
+const QuestionsItems = () => import('views/student/questions/childComps/Items');
+
+const Discussion = () => import('views/student/discussion/Discussion');
+const Questions = () => import('views/student/questions/Questions');
+const Study = () => import('views/student/study/Study');
+
+
+Vue.use(VueRouter);
 const routes = [
+  {
+    path: '/',
+    component: resolve => (require(["views/student/form/childComps/LoginView"], resolve)),
+  },
   {
     path: '/form',
     component: resolve => (require(["views/student/form/Form"], resolve)),
@@ -73,7 +77,13 @@ const routes = [
   },
   {
     path: '/discussione',
-    component: resolve => (require(["views/student/discussion/Discussion"], resolve))
+    component: resolve => (require(["views/student/discussion/Discussion"], resolve)),
+    children: [
+      {
+        path: 'show',
+        component: resolve => (require(["views/student/discussion/childComps/ShowView"], resolve)),
+      }
+    ]
   },
   {
     path: '/information',
@@ -102,15 +112,24 @@ const routes = [
       {
         path: 'questionDetail',
         component: resolve => (require(["views/teacher/index/childComps/student/QuestionDetail"], resolve)),
+      },
+      {
+        path: 'publish',
+        component: resolve => (require(["views/teacher/index/childComps/article/PublishView"], resolve)),
+      },
+      {
+        path: 'show',
+        component: resolve => (require(["views/teacher/index/childComps/article/ShowView"], resolve)),
       }
     ]
   }
-]
+];
 
 const router = new VueRouter({
   routes,
-  mode: 'history'
-})
+  // mode: 'history',
+  // base:"/vue"
+});
 router.beforeEach((to,from,next)=>{
   if(to.path=='/form/login'||to.path=='/form/register'){
     next();
@@ -120,6 +139,6 @@ router.beforeEach((to,from,next)=>{
     next({path:'/form/login'});
   }
   
-})
+});
 
 export default router

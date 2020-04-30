@@ -128,10 +128,10 @@
       submit() {
         addQuestion(this.question).then(res => {
           if(res.code==1001){
-            this.code= res.code
+            this.code= res.code;
             this.$message.error('增加失败！');
           }else{
-            this.code= res.code
+            this.code= res.code;
             this.active=3;
             this.$message.success('增加成功！');
             this.handleUserList() ;

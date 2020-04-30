@@ -88,7 +88,7 @@
         qryAllGrade().then(res => {
           console.log(res.data);
           this.grade = res.data;
-        })
+        });
         qryAllSchool().then(res => {
           console.log(res.data);
           this.school = res.data;
@@ -103,9 +103,12 @@
               if (res.success) {
                 this.$notify({
                   title: '成功',
-                  message: "可以前去登录" ,
+                  message: "可以登录" ,
                   type: 'success'
                 });
+                this.$router.push({
+                  path: '/form/login',
+                })
                 // console.log('status:'+res.data.status);
                 // console.log('type:'+res.data.type);
                 // console.log(res.data.message);

@@ -9,7 +9,7 @@
     </el-input>
     <div>
       <el-upload
-              action="http://localhost/discussion/imgUpload"
+              action="http://www.0612yjf.cn:8888/discussion/imgUpload"
               :headers="myHeaders"
               list-type="picture-card"
               :limit = "1"
@@ -34,7 +34,7 @@
 <script>
   import {insertDiscussion,deleteImg} from "@/network/student/index";
   import {qryNotParentId} from "@/network/student/index";
-  var token = localStorage.getItem('Authorization') // 要保证取到
+  var token = localStorage.getItem('Authorization'); // 要保证取到
   export default {
     name: "Publish",
     data() {

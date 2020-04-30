@@ -141,13 +141,13 @@
       },
       handleUserList() {
         qryAllQuestionInfo().then(res => {
-          this.userList = res.data
+          this.userList = res.data;
           console.log(res.data);
         });
       },
       handleUpdate(index) {
         console.log(index);
-        this.dialogFormVisible = true
+        this.dialogFormVisible = true;
         qryQuestionInfoById(index).then(res => {
           this.dialogData = res.data
         });

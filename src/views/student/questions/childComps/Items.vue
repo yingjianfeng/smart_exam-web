@@ -4,7 +4,7 @@
     <div class="items-main">
       <div @click="click(item.id,-1)" v-for="item in testGrade">
         <el-card :body-style="{ padding: '0px' }" class="item" shadow="always">
-          <img src="../../../../assets/img/math.png" class="image"/>
+          <img src="http://bpic.588ku.com/art_origin_min_pic/19/03/12/e80425556622ce02fbeba03fdb043987.jpg" class="image"/>
           <div class="item-main ">
             <div class="item-main-info">{{item.name}}数学</div>
           </div>
@@ -21,7 +21,7 @@
       <div class="items-main">
         <div @click="click(item.id,classify.id)" v-for="classify in item.questionClassify">
           <el-card :body-style="{ padding: '0px' }" class="item" shadow="always">
-            <img src="../../../../assets/img/math.png" class="image"/>
+            <img :src="classify.img" class="image"/>
             <div class="item-main ">
               <div class="item-main-info">数学{{classify.name}}</div>
             </div>
@@ -46,6 +46,7 @@
     methods: {
       qryItems() {
         qryGradeAndClassify().then(res => {
+          console.log(res.data);
           this.grade = res.data;
         });
       },

@@ -4,8 +4,8 @@
       <HeaderView></HeaderView>
     </el-header>
     <el-main class="main">
-      <Carousel></Carousel>
-      <FormView></FormView>
+        <Carousel></Carousel>
+        <FormView></FormView>
     </el-main>
     <el-footer class="footer">
       <FooterView/>

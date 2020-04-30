@@ -25,8 +25,8 @@
 
 <style scoped>
   .el-carousel{
-    height: 500px;
-    width: 900px;
+    height: 40%;
+    width: 60%;
     float: left;
     margin-top: 50px;
     margin-left: 20px;

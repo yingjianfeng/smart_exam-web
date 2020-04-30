@@ -4,7 +4,8 @@ export default function axios(option) {
   return new Promise((resolve, reject) => {
     // 1.创建axios的实例
     const instance = originAxios.create({
-      baseURL: 'http://localhost',
+      // baseURL: 'http://localhost:8888',
+      baseURL: 'http://www.0612yjf.cn:8888',
       timeout: 5000,
     });
     
@@ -24,7 +25,7 @@ export default function axios(option) {
     }, err => {
       // console.log('来到了request拦截failure中');
       return err
-    })
+    });
     
     instance.interceptors.response.use(response => {
       // console.log('来到了response拦截success中');
@@ -35,15 +36,15 @@ export default function axios(option) {
       if (err && err.response) {
         switch (err.response.status) {
           case 400:
-            err.message = '请求错误'
-            break
+            err.message = '请求错误';
+            break;
           case 401:
-            err.message = '未授权的访问'
+            err.message = '未授权的访问';
             break
         }
       }
       return err
-    })
+    });
     
     // 2.传入对象进行网络请求
     instance(option).then(res => {

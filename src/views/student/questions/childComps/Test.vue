@@ -81,6 +81,7 @@
             --that.maxtime;
             // console.log(this.s);
           } else {
+            clearInterval(that.timer);
             submitAnswer(that.question,0).then(res => {
               console.log(res.data);
               that.question_result = res.data.map;
@@ -99,20 +100,17 @@
   
             that.btn.text = "已提交";
             that.btn.disabled = true;
-            
-            
-            clearInterval(this.timer);
           }
           
         }
         
-        if (this.classifyId == -1) {
-          this.timer = setInterval(down, 1000);
+        if (that.classifyId == -1) {
+          that.timer = setInterval(down, 1000);
         }
       },
       qryByclassifyIdAndGradeId() {
-        var classifyId = this.$route.query.classifyId
-        var gradeId = this.$route.query.gradeId
+        var classifyId = this.$route.query.classifyId;
+        var gradeId = this.$route.query.gradeId;
         qryByclassifyIdAndGradeId(classifyId, gradeId).then(res => {
           this.question = res.data;
         });
@@ -124,6 +122,7 @@
           type: 'warning'
         }).then(() => {
           var time = 5*60-this.maxtime;
+          console.log("time: "+time);
           submitAnswer(this.question,time).then(res => {
             console.log(res.data);
             this.question_result = res.data.map;

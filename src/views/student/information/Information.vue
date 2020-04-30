@@ -35,7 +35,7 @@
         <el-form ref="form" :model="form" label-width="80px">
           <el-upload
                   class="avatar-uploader"
-                  action="http://localhost/info/updateImg"
+                  action="http://www.0612yjf.cn:8888/info/updateImg"
                   :headers="myHeaders"
                   :show-file-list="false"
                   :on-success="handleSuccess"
@@ -61,7 +61,7 @@
   import HeaderView from '@/views/student/index/childComps/header/Header'
   import {qryInfo,updatePassword} from "@/network/student/info";
 
-  var token = localStorage.getItem('Authorization') // 要保证取到
+  var token = localStorage.getItem('Authorization'); // 要保证取到
   export default {
     name: "Information",
     data() {
