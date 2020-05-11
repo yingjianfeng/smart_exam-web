@@ -3,10 +3,11 @@ import App from './App.vue'
 import router from './router'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
-// import 'lib-flexible'
+import 'lib-flexible'
 //markdown
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+
 Vue.use(mavonEditor);
 
 Vue.use(Element);

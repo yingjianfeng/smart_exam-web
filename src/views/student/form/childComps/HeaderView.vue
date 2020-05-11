@@ -1,7 +1,7 @@
 <template>
   <div id="headerview">
       <img src="../../../../assets/img/logo.png"/>
-      <div class="logospan">智能组卷与答题计分系统</div>
+      <div class="logospan">小学数学四则运算智能组卷与答题计分系统</div>
   </div>
 </template>
 

@@ -2,7 +2,7 @@
   <el-container>
     <el-header>
       <div class="headerdiv">
-        智能组卷与答题计分系统
+        小学数学四则运算智能组卷与答题计分系统
       </div>
     </el-header>
     <el-container>
@@ -20,7 +20,7 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="1-1" @click="toquestiondetail">答题详情</el-menu-item>
-              <el-menu-item index="1-2">布置作业</el-menu-item>
+              <el-menu-item index="1-2" @click="toanalyze">答题分析</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">
@@ -93,7 +93,11 @@
       },
       toarticleshow(){
         this.$router.push("/teacher/index/show");
+      },
+      toanalyze(){
+        this.$router.push("/teacher/index/analyze");
       }
+      
     }
   }
 </script>
@@ -119,7 +123,7 @@
   }
   .headerdiv{
     /*background: #04bdb9;*/
-    width: 250px;
+    width: 300px;
     height: 50px;
     margin-left: 100px;
     font-size: 20px;

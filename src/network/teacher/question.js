@@ -86,8 +86,23 @@ export function qryAllSchool() {
   return axios({
     url: '/qryAllSchool',
     method: 'get',
-    data: {
     
+  })
+}
+
+export function qryEcharts1And2() {
+  return axios({
+    url: '/question/qryEcharts1And2',
+    method: 'post',
+  })
+}
+export function qryEcharts3(name,date) {
+  return axios({
+    url: '/question/qryEcharts3',
+    method: 'post',
+    data: {
+      name:name,
+      date:date
     }
   })
 }

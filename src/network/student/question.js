@@ -58,4 +58,21 @@ export function qryAllGrade() {
   })
 }
 
+export function qryQuestionFailByPId() {
+  return axios({
+    url: '/question/qryQuestionFailByPId',
+    method: 'post',
+  })
+}
 
+export function questionFailSubmit(questioninfo) {
+  return axios({
+    url: '/question/questionFailSubmit',
+    method: 'post',
+    data: {
+      id:questioninfo.id,
+      answer:questioninfo.answer,
+      f_id:questioninfo.f_id
+    }
+  })
+}

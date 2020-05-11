@@ -120,6 +120,9 @@ const routes = [
       {
         path: 'show',
         component: resolve => (require(["views/teacher/index/childComps/article/ShowView"], resolve)),
+      },{
+        path: 'analyze',
+        component: resolve => (require(["views/teacher/index/childComps/question/Analyze"], resolve)),
       }
     ]
   }

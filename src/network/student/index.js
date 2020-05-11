@@ -120,7 +120,12 @@ export function reply(discussion) {
 
 
 
-
+export function qryQuestionInfoByGroup() {
+  return axios({
+    url: '/question/qryQuestionInfoByGroup',
+    method: 'post',
+  })
+}
 
 
 

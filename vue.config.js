@@ -1,4 +1,6 @@
 //配置别名
+
+
 module.exports = {
   configureWebpack: {
     resolve: {
@@ -9,5 +11,13 @@ module.exports = {
       }
     }
   }
+  ,
+ 
 };
 
+// module.exports = {
+// //   entry: './index.js',
+// //   output: {
+// //     filename: 'bundle.js'
+// //   }
+// // };
